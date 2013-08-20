@@ -5,7 +5,7 @@
 	import src.events.BaseEvent;
 	import src.view.BaseView;
 	
-	public class Base extends MovieClip {
+	public class Base extends EventDispatcher{
 		static private const REGEN_AMOUNT:Number = 1;
 		static private const REGEN_RATE:Number = 1000;
 		

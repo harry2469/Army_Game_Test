@@ -6,6 +6,7 @@
 	import flash.geom.Point;
 	import src.events.BaseEvent;
 	import src.view.BaseView;
+	import src.view.BaseViewGraphics;
 	import src.view.IBaseView;
 	import src.view.NullBaseView;
 	
@@ -35,7 +36,7 @@
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			initBaseModels();
 			initBaseViews();
-			addBases();
+			addViewListeners();
 		}
 		
 		private function initBaseModels():void {
@@ -48,16 +49,16 @@
 				_baseViews.push(new BaseView(_positions[i], _colours[i], _baseModels[i], this));
 		}
 		
-		private function addBases():void {
+		private function addViewListeners():void {
 			for (var i:uint = 0; i < _baseViews.length; i++)
-				_baseViews[i].addEventListener(MouseEvent.CLICK, selectIfAppropiate);
+				_baseViews[i].art.addEventListener(MouseEvent.CLICK, selectIfAppropiate);
 		}
 		
 		private function selectIfAppropiate(event:MouseEvent):void {
 			if (!_selected.isNull())
 				selected = NullBaseView.NULL_BASE_VIEW;
 			else
-				selected = event.target.parent;
+				selected = event.target.parent.creator;
 		}
 		
 		private function set selected(value:IBaseView):void {

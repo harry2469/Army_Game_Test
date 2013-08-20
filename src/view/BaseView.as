@@ -1,18 +1,19 @@
 package src.view {
 	import flash.display.*;
-	import flash.geom.ColorTransform;
-	import flash.geom.Point;
+	import flash.geom.*;
 	import src.Base;
 	import src.events.BaseEvent;
 	
 	/** @author Kristian Welsh */
-	public class BaseView extends MovieClip implements IBaseView {
+	public class BaseView implements IBaseView {
+		private var _art:MovieClip;
 		
 		public function BaseView(position:Point, colour:uint, model:Base, container:DisplayObjectContainer) {
 			super();
-			container.addChild(this);
-			super.x = position.x;
-			super.y = position.y;
+			_art = new BaseViewGraphics(this);
+			container.addChild(_art);
+			_art.x = position.x;
+			_art.y = position.y;
 			deselect();
 			changeColour(colour);
 			setPopulation(model.startingPopulation);
@@ -22,16 +23,16 @@ package src.view {
 		public function changeColour(colour:uint):void {
 			var colourTransform:ColorTransform = new ColorTransform();
 			colourTransform.color = colour;
-			pop.transform.colorTransform = colourTransform;
-			base_graphics.transform.colorTransform = colourTransform;
+			_art.pop.transform.colorTransform = colourTransform;
+			_art.base_graphics.transform.colorTransform = colourTransform;
 		}
 		
 		public function select():void {
-			selector.visible = true;
+			_art.selector.visible = true;
 		}
 		
 		public function deselect():void {
-			selector.visible = false;
+			_art.selector.visible = false;
 		}
 		
 		private function updatePopulation(event:BaseEvent):void {
@@ -39,11 +40,15 @@ package src.view {
 		}
 		
 		private function setPopulation(value:int):void {
-			pop.text = "" + value;
+			_art.pop.text = "" + value;
 		}
 		
 		public function isNull():Boolean {
 			return false;
+		}
+		
+		public function get art():MovieClip {
+			return _art;
 		}
 	}
 }
