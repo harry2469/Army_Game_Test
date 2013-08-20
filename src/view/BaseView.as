@@ -1,21 +1,21 @@
 package src.view {
-	import flash.display.DisplayObjectContainer;
-	import flash.display.MovieClip;
+	import flash.display.*;
 	import flash.geom.ColorTransform;
+	import flash.geom.Point;
 	import src.Base;
 	import src.events.BaseEvent;
-	import src.IBaseView;
 	
 	/** @author Kristian Welsh */
 	public class BaseView extends MovieClip implements IBaseView {
 		
-		public function BaseView(x:Number, y:Number, colour:uint, model:Base, container:DisplayObjectContainer) {
+		public function BaseView(position:Point, colour:uint, model:Base, container:DisplayObjectContainer) {
 			super();
 			container.addChild(this);
-			super.x = x;
-			super.y = y;
+			super.x = position.x;
+			super.y = position.y;
 			deselect();
 			changeColour(colour);
+			setPopulation(model.startingPopulation);
 			model.addEventListener(BaseEvent.POPULATION_CHANGED, updatePopulation);
 		}
 		
@@ -38,7 +38,7 @@ package src.view {
 			setPopulation(event.population);
 		}
 		
-		public function setPopulation(value:int):void {
+		private function setPopulation(value:int):void {
 			pop.text = "" + value;
 		}
 		

@@ -3,8 +3,10 @@
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.geom.Point;
 	import src.events.BaseEvent;
 	import src.view.BaseView;
+	import src.view.IBaseView;
 	import src.view.NullBaseView;
 	
 	/**
@@ -14,6 +16,12 @@
 	public class Main extends Sprite {
 		private var _baseModels:Vector.<Base> = new Vector.<Base>();
 		private var _baseViews:Vector.<BaseView> = new Vector.<BaseView>();
+		
+		// TODO: load these from an XML file.
+		private var _positions:Vector.<Point> = Vector.<Point>([new Point(250, 100), new Point(150, 300), new Point(350, 300)]);
+		private var _startingPopulations:Vector.<uint> = Vector.<uint>([10, 20, 30]);
+		private var _colours:Vector.<uint> = Vector.<uint>([0xFF0000, 0x00FF00, 0x0000FF]);
+		
 		public var _selected:IBaseView = NullBaseView.NULL_BASE_VIEW;
 		
 		public function Main():void {
@@ -25,30 +33,24 @@
 		
 		private function init(e:Event = null):void {
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-			initVars();
+			initBaseModels();
+			initBaseViews();
 			addBases();
 		}
 		
-		private function initVars():void {
-			_baseModels.push(new Base());
-			_baseViews.push(new BaseView(250, 100, 0xFF0000, _baseModels[_baseModels.length - 1], this));
-			_baseModels[_baseModels.length - 1].setView(_baseViews[_baseViews.length - 1], 50);
-			
-			_baseModels.push(new Base());
-			_baseViews.push(new BaseView(150, 300, 0x00FF00, _baseModels[_baseModels.length - 1], this));
-			_baseModels[_baseModels.length - 1].setView(_baseViews[_baseViews.length - 1], 50);
-			
-			_baseModels.push(new Base());
-			_baseViews.push(new BaseView(350, 300, 0x0000FF, _baseModels[_baseModels.length - 1], this));
-			_baseModels[_baseModels.length - 1].setView(_baseViews[_baseViews.length - 1], 50);
+		private function initBaseModels():void {
+			for (var i:uint = 0; i < _positions.length; i++)
+				_baseModels.push(new Base(_startingPopulations[i]));
+		}
+		
+		private function initBaseViews():void {
+			for (var i:uint = 0; i < _baseModels.length; i++)
+				_baseViews.push(new BaseView(_positions[i], _colours[i], _baseModels[i], this));
 		}
 		
 		private function addBases():void {
-			for (var i:uint = 0; i < _baseModels.length; i++) {
-				addChild(_baseModels[i] as MovieClip);
-				_baseModels[i].addEventListener(BaseEvent.CLICKED, selectIfAppropiate);
+			for (var i:uint = 0; i < _baseViews.length; i++)
 				_baseViews[i].addEventListener(MouseEvent.CLICK, selectIfAppropiate);
-			}
 		}
 		
 		private function selectIfAppropiate(event:MouseEvent):void {

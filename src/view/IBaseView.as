@@ -1,4 +1,4 @@
-package src {
+package src.view {
 	/** @author Kristian Welsh */
 	public interface IBaseView {
 		function select():void;

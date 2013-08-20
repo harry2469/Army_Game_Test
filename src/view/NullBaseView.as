@@ -1,7 +1,5 @@
 package src.view {
 	import flash.display.MovieClip;
-	import src.events.BaseEvent;
-	import src.IBaseView;
 	import src.view.BaseView;
 	/** @author Kristian Welsh */
 	public class NullBaseView extends MovieClip implements IBaseView {
