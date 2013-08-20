@@ -1,14 +1,10 @@
 ﻿package src {
-	import flash.display.MovieClip;
 	import flash.display.Sprite;
-	import flash.events.Event;
-	import flash.events.MouseEvent;
+	import flash.events.*;
 	import flash.geom.Point;
-	import src.events.BaseEvent;
-	import src.view.BaseView;
-	import src.view.BaseViewGraphics;
-	import src.view.IBaseView;
-	import src.view.NullBaseView;
+	import src.view.*;
+	
+	[SWF(width="800",height="600",frameRate="60",backgroundColor="#999999")]
 	
 	/**
 	 * Must currently be built from the .fla fule untill the view is independant from the .fla's library assets
@@ -55,7 +51,7 @@
 		}
 		
 		private function selectIfAppropiate(event:MouseEvent):void {
-			if (!_selected.isNull())
+			if (!_selected.isNull)
 				selected = NullBaseView.NULL_BASE_VIEW;
 			else
 				selected = event.target.parent.creator;

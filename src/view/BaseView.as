@@ -1,4 +1,5 @@
 package src.view {
+	
 	import flash.display.*;
 	import flash.geom.*;
 	import src.Base;
@@ -6,33 +7,40 @@ package src.view {
 	
 	/** @author Kristian Welsh */
 	public class BaseView implements IBaseView {
-		private var _art:MovieClip;
+		private var _art:BaseViewGraphics;
+		
+		public function get isNull():Boolean {
+			return false;
+		}
+		
+		public function get art():MovieClip {
+			return _art;
+		}
 		
 		public function BaseView(position:Point, colour:uint, model:Base, container:DisplayObjectContainer) {
 			super();
-			_art = new BaseViewGraphics(this);
-			container.addChild(_art);
-			_art.x = position.x;
-			_art.y = position.y;
-			deselect();
-			changeColour(colour);
+			_art = new BaseViewGraphics(this, container);
+			initValues(position, colour, model);
+			listenForPositionChanges(model);
+		}
+		
+		private function initValues(position:Point, colour:uint, model:Base):void {
+			_art.setPosition(position.x, position.y);
 			setPopulation(model.startingPopulation);
+			deselect();
+			_art.setColourTransform(colour);
+		}
+		
+		private function listenForPositionChanges(model:Base):void {
 			model.addEventListener(BaseEvent.POPULATION_CHANGED, updatePopulation);
 		}
 		
-		public function changeColour(colour:uint):void {
-			var colourTransform:ColorTransform = new ColorTransform();
-			colourTransform.color = colour;
-			_art.pop.transform.colorTransform = colourTransform;
-			_art.base_graphics.transform.colorTransform = colourTransform;
-		}
-		
 		public function select():void {
-			_art.selector.visible = true;
+			_art.select()
 		}
 		
 		public function deselect():void {
-			_art.selector.visible = false;
+			_art.deselect()
 		}
 		
 		private function updatePopulation(event:BaseEvent):void {
@@ -40,15 +48,7 @@ package src.view {
 		}
 		
 		private function setPopulation(value:int):void {
-			_art.pop.text = "" + value;
-		}
-		
-		public function isNull():Boolean {
-			return false;
-		}
-		
-		public function get art():MovieClip {
-			return _art;
+			_art.setText(""+value);
 		}
 	}
 }

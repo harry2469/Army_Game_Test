@@ -9,7 +9,7 @@ package src.view {
 		public function deselect():void { }
 		public function setView(colour:uint, view:BaseView, number:int):void { }
 		
-		public function isNull():Boolean {
+		public function get isNull():Boolean {
 			return true;
 		}
 	}

@@ -3,6 +3,6 @@ package src.view {
 	public interface IBaseView {
 		function select():void;
 		function deselect():void;
-		function isNull():Boolean;
+		function get isNull():Boolean;
 	}
 }
