@@ -25,10 +25,9 @@
 			addListeners();
 		}
 		
-		public function setView(colour:uint, value:BaseView, starting_pop:int):void {
+		public function setView(value:BaseView, starting_pop:int):void {
 			_view = value;
 			population = starting_pop;
-			_view.changeColour(colour);
 		}
 		
 		private function addListeners():void {

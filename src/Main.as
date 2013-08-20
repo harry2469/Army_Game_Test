@@ -31,16 +31,16 @@
 		
 		private function initVars():void {
 			_baseModels.push(new Base());
-			_baseViews.push(new BaseView(250, 100, _baseModels[_baseModels.length - 1], this));
-			_baseModels[_baseModels.length - 1].setView(0xFF0000, _baseViews[_baseViews.length - 1], 50);
+			_baseViews.push(new BaseView(250, 100, 0xFF0000, _baseModels[_baseModels.length - 1], this));
+			_baseModels[_baseModels.length - 1].setView(_baseViews[_baseViews.length - 1], 50);
 			
 			_baseModels.push(new Base());
-			_baseViews.push(new BaseView(150, 300, _baseModels[_baseModels.length - 1], this));
-			_baseModels[_baseModels.length - 1].setView(0x00FF00, _baseViews[_baseViews.length - 1], 50);
+			_baseViews.push(new BaseView(150, 300, 0x00FF00, _baseModels[_baseModels.length - 1], this));
+			_baseModels[_baseModels.length - 1].setView(_baseViews[_baseViews.length - 1], 50);
 			
 			_baseModels.push(new Base());
-			_baseViews.push(new BaseView(350, 300, _baseModels[_baseModels.length - 1], this));
-			_baseModels[_baseModels.length - 1].setView(0x0000FF, _baseViews[_baseViews.length - 1], 50);
+			_baseViews.push(new BaseView(350, 300, 0x0000FF, _baseModels[_baseModels.length - 1], this));
+			_baseModels[_baseModels.length - 1].setView(_baseViews[_baseViews.length - 1], 50);
 		}
 		
 		private function addBases():void {

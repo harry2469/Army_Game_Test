@@ -8,12 +8,13 @@ package src.view {
 	/** @author Kristian Welsh */
 	public class BaseView extends MovieClip implements IBaseView {
 		
-		public function BaseView(x:Number, y:Number, model:Base, container:DisplayObjectContainer) {
+		public function BaseView(x:Number, y:Number, colour:uint, model:Base, container:DisplayObjectContainer) {
 			super();
 			container.addChild(this);
 			super.x = x;
 			super.y = y;
 			deselect();
+			changeColour(colour);
 		}
 		
 		public function changeColour(colour:uint):void {
