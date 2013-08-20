@@ -10,7 +10,6 @@
 	public class Base extends MovieClip implements IBase {
 		static private const REGEN_RATE:Number = 1;
 		
-		private var _parent:DisplayObjectContainer;
 		private var _view:BaseView;
 		private var _population:int;
 		protected var _colour:String;
@@ -22,21 +21,18 @@
 			_view.setPopulation(value);
 		}
 		
-		public function Base(colour:uint, x:int, y:int, starting_pop:int, parent:DisplayObjectContainer):void {
-			_view = new BaseView(parent, x, y, this);
-			_parent = parent;
-			initColour(colour);
-			population = starting_pop;
-			deselect();
+		public function Base():void {
 			addListeners();
 		}
 		
-		private function initColour(colour:uint):void {
+		public function setView(colour:uint, value:BaseView, starting_pop:int):void {
+			_view = value;
+			population = starting_pop;
 			_view.changeColour(colour);
+			deselect();
 		}
 		
 		private function addListeners():void {
-			_view.addEventListener(MouseEvent.CLICK, dispatchSelectEvent);
 			_timer.addEventListener(TimerEvent.TIMER, regenPop);
 			_timer.start();
 		}

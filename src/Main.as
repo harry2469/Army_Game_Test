@@ -5,14 +5,17 @@
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import src.events.BaseEvent;
+	import src.view.BaseView;
+	import src.view.NullBaseView;
 	
 	/**
 	 * Must currently be built from the .fla fule untill the view is independant from the .fla's library assets
 	 * @author Kristian Welsh
 	 */
 	public class Main extends Sprite {
-		private var _bases:Vector.<IBase> = new Vector.<IBase>();
-		public var _selected:IBase = NullBase.NULL_BASE;
+		private var _baseModels:Vector.<IBase> = new Vector.<IBase>();
+		private var _baseViews:Vector.<BaseView> = new Vector.<BaseView>();
+		public var _selected:IBaseView = NullBaseView.NULL_BASE_VIEW;
 		
 		public function Main():void {
 			if (stage != null) // Stage may be null if .swf file is loded in another .swf file but not added to the stage yet
@@ -28,26 +31,35 @@
 		}
 		
 		private function initVars():void {
-			_bases.push(new RedBase(250, 100, 50, this));
-			_bases.push(new GreenBase(150, 300, 50, this));
-			_bases.push(new BlueBase(350, 300, 50, this));
+			_baseModels.push(new Base());
+			_baseViews.push(new BaseView(250, 100, _baseModels[_baseModels.length - 1], this));
+			_baseModels[_baseModels.length - 1].setView(0xFF0000, _baseViews[_baseViews.length - 1], 50);
+			
+			_baseModels.push(new Base());
+			_baseViews.push(new BaseView(150, 300, _baseModels[_baseModels.length - 1], this));
+			_baseModels[_baseModels.length - 1].setView(0x00FF00, _baseViews[_baseViews.length - 1], 50);
+			
+			_baseModels.push(new Base());
+			_baseViews.push(new BaseView(350, 300, _baseModels[_baseModels.length - 1], this));
+			_baseModels[_baseModels.length - 1].setView(0x0000FF, _baseViews[_baseViews.length - 1], 50);
 		}
 		
 		private function addBases():void {
-			for (var i:uint = 0; i < _bases.length; i++) {
-				addChild(_bases[i] as MovieClip);
-				_bases[i].addEventListener(BaseEvent.CLICKED, selectIfAppropiate);
+			for (var i:uint = 0; i < _baseModels.length; i++) {
+				addChild(_baseModels[i] as MovieClip);
+				_baseModels[i].addEventListener(BaseEvent.CLICKED, selectIfAppropiate);
+				_baseViews[i].addEventListener(MouseEvent.CLICK, selectIfAppropiate);
 			}
 		}
 		
-		private function selectIfAppropiate(event:BaseEvent):void {
+		private function selectIfAppropiate(event:MouseEvent):void {
 			if (!_selected.isNull())
-				selected = NullBase.NULL_BASE;
+				selected = NullBaseView.NULL_BASE_VIEW;
 			else
-				selected = event.base;
+				selected = event.target.parent;
 		}
 		
-		private function set selected(value:IBase):void {
+		private function set selected(value:IBaseView):void {
 			_selected.deselect();
 			_selected = value;
 			_selected.select();

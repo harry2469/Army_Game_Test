@@ -4,8 +4,8 @@ package src.events {
 	
 	/** @author Kristian Welsh */
 	public class BaseEvent extends Event {
-		public static const SELECTED:String = "selected";
 		static public const CLICKED:String = "clicked";
+		public static const SELECTED:String = "selected";
 		static public const DESELECTED:String = "deselected";
 		
 		private var _base:Base;
