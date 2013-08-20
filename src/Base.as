@@ -1,28 +1,27 @@
 ﻿package src {
-	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.events.*;
-	import flash.geom.ColorTransform;
 	import flash.utils.Timer;
 	import src.events.BaseEvent;
 	import src.view.BaseView;
 	
 	public class Base extends MovieClip {
-		static private const REGEN_RATE:Number = 1;
+		static private const REGEN_AMOUNT:Number = 1;
+		static private const REGEN_RATE:Number = 1000;
 		
 		private var _view:BaseView;
 		private var _population:int;
 		protected var _colour:String;
 		
-		private var _timer:Timer = new Timer(1000);
+		private var _populationRegenTimer:Timer = new Timer(REGEN_RATE);
 		
 		private function set population(value:int):void {
 			_population = value;
-			_view.setPopulation(value);
+			dispatchEvent(new BaseEvent(BaseEvent.POPULATION_CHANGED, this, value));
 		}
 		
 		public function Base():void {
-			addListeners();
+			regularlyRegeneratePopulation();
 		}
 		
 		public function setView(value:BaseView, starting_pop:int):void {
@@ -30,9 +29,9 @@
 			population = starting_pop;
 		}
 		
-		private function addListeners():void {
-			_timer.addEventListener(TimerEvent.TIMER, regenPop);
-			_timer.start();
+		private function regularlyRegeneratePopulation():void {
+			_populationRegenTimer.addEventListener(TimerEvent.TIMER, regenPop);
+			_populationRegenTimer.start();
 		}
 		
 		private function dispatchSelectEvent(e:MouseEvent):void {
@@ -40,7 +39,7 @@
 		}
 		
 		private function regenPop(event:TimerEvent):void {
-			population = _population + REGEN_RATE;
+			population = _population + REGEN_AMOUNT;
 		}
 		
 		public function isNull():Boolean {

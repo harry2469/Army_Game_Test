@@ -3,6 +3,7 @@ package src.view {
 	import flash.display.MovieClip;
 	import flash.geom.ColorTransform;
 	import src.Base;
+	import src.events.BaseEvent;
 	import src.IBaseView;
 	
 	/** @author Kristian Welsh */
@@ -15,6 +16,7 @@ package src.view {
 			super.y = y;
 			deselect();
 			changeColour(colour);
+			model.addEventListener(BaseEvent.POPULATION_CHANGED, updatePopulation);
 		}
 		
 		public function changeColour(colour:uint):void {
@@ -30,6 +32,10 @@ package src.view {
 		
 		public function deselect():void {
 			selector.visible = false;
+		}
+		
+		private function updatePopulation(event:BaseEvent):void {
+			setPopulation(event.population);
 		}
 		
 		public function setPopulation(value:int):void {
