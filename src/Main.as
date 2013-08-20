@@ -1,9 +1,8 @@
 ﻿package src {
-	import flash.events.MouseEvent;
-	import src.events.BaseEvent;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import src.events.BaseEvent;
 	import src.view.BaseView;
 	import src.view.NullBaseView;
@@ -13,7 +12,7 @@
 	 * @author Kristian Welsh
 	 */
 	public class Main extends Sprite {
-		private var _baseModels:Vector.<IBase> = new Vector.<IBase>();
+		private var _baseModels:Vector.<Base> = new Vector.<Base>();
 		private var _baseViews:Vector.<BaseView> = new Vector.<BaseView>();
 		public var _selected:IBaseView = NullBaseView.NULL_BASE_VIEW;
 		

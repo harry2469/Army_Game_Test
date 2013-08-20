@@ -2,15 +2,13 @@ package src.view {
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.geom.ColorTransform;
-	import src.events.BaseEvent;
-	import src.IBase;
+	import src.Base;
 	import src.IBaseView;
-	import src.Main;
 	
 	/** @author Kristian Welsh */
 	public class BaseView extends MovieClip implements IBaseView {
 		
-		public function BaseView(x:Number, y:Number, model:IBase, container:DisplayObjectContainer) {
+		public function BaseView(x:Number, y:Number, model:Base, container:DisplayObjectContainer) {
 			super();
 			container.addChild(this);
 			super.x = x;

@@ -7,7 +7,7 @@
 	import src.events.BaseEvent;
 	import src.view.BaseView;
 	
-	public class Base extends MovieClip implements IBase {
+	public class Base extends MovieClip {
 		static private const REGEN_RATE:Number = 1;
 		
 		private var _view:BaseView;
@@ -29,7 +29,6 @@
 			_view = value;
 			population = starting_pop;
 			_view.changeColour(colour);
-			deselect();
 		}
 		
 		private function addListeners():void {
@@ -43,14 +42,6 @@
 		
 		private function regenPop(event:TimerEvent):void {
 			population = _population + REGEN_RATE;
-		}
-		
-		public function select():void {
-			dispatchEvent(new BaseEvent(BaseEvent.SELECTED, this));
-		}
-		
-		public function deselect():void {
-			dispatchEvent(new BaseEvent(BaseEvent.DESELECTED, this));
 		}
 		
 		public function isNull():Boolean {
