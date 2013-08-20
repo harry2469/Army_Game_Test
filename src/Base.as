@@ -1,16 +1,17 @@
 ﻿package src {
-	import src.events.BaseEvent;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
-	import flash.events.MouseEvent;
-	import flash.events.TimerEvent;
+	import flash.events.*;
 	import flash.geom.ColorTransform;
 	import flash.utils.Timer;
 	import src.events.BaseEvent;
+	import src.view.BaseView;
 	
-	public class Base extends MovieClip implements IBase{
+	public class Base extends MovieClip implements IBase {
 		static private const REGEN_RATE:Number = 1;
 		
-		private var _main:Main;
+		private var _parent:DisplayObjectContainer;
+		private var _view:BaseView;
 		private var _population:int;
 		protected var _colour:String;
 		
@@ -18,13 +19,12 @@
 		
 		private function set population(value:int):void {
 			_population = value;
-			pop.text = "" + value;
+			_view.setPopulation(value);
 		}
 		
-		public function Base(colour:uint, x:int, y:int, starting_pop:int, MAIN:Main):void {
-			_main = MAIN;
-			this.x = x;
-			this.y = y;
+		public function Base(colour:uint, x:int, y:int, starting_pop:int, parent:DisplayObjectContainer):void {
+			_view = new BaseView(parent, x, y, this);
+			_parent = parent;
 			initColour(colour);
 			population = starting_pop;
 			deselect();
@@ -32,20 +32,17 @@
 		}
 		
 		private function initColour(colour:uint):void {
-			var colourTransform:ColorTransform = new ColorTransform();
-			colourTransform.color = colour;
-			pop.transform.colorTransform = colourTransform;
-			base_graphics.transform.colorTransform = colourTransform;
+			_view.changeColour(colour);
 		}
 		
 		private function addListeners():void {
-			this.addEventListener(MouseEvent.CLICK, dispatchSelectEvent);
+			_view.addEventListener(MouseEvent.CLICK, dispatchSelectEvent);
 			_timer.addEventListener(TimerEvent.TIMER, regenPop);
 			_timer.start();
 		}
 		
 		private function dispatchSelectEvent(e:MouseEvent):void {
-			dispatchEvent(new BaseEvent(BaseEvent.SELECTED, this));
+			dispatchEvent(new BaseEvent(BaseEvent.CLICKED, this));
 		}
 		
 		private function regenPop(event:TimerEvent):void {
@@ -53,11 +50,11 @@
 		}
 		
 		public function select():void {
-			selector.visible = true;
+			dispatchEvent(new BaseEvent(BaseEvent.SELECTED, this));
 		}
 		
 		public function deselect():void {
-			selector.visible = false;
+			dispatchEvent(new BaseEvent(BaseEvent.DESELECTED, this));
 		}
 		
 		public function isNull():Boolean {
