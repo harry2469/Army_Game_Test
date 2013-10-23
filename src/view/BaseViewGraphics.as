@@ -4,10 +4,10 @@ package src.view {
 	import src.view.BaseView;
 	/** @author Kristian Welsh */
 	public class BaseViewGraphics extends MovieClip {
-		public var creator:BaseView;
+		private var _creator:BaseView;
 		public function BaseViewGraphics(creator:BaseView, container:DisplayObjectContainer) {
 			super();
-			this.creator = creator;
+			_creator = creator;
 			container.addChild(this);
 		}
 		
@@ -21,6 +21,10 @@ package src.view {
 			colourTransform.color = colour;
 			pop.transform.colorTransform = colourTransform;
 			base_graphics.transform.colorTransform = colourTransform;
+		}
+		
+		public function get creator():BaseView {
+			return _creator;
 		}
 		
 		public function select():void {

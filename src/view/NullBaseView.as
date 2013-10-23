@@ -1,6 +1,7 @@
 package src.view {
 	import flash.display.MovieClip;
 	import src.view.BaseView;
+	
 	/** @author Kristian Welsh */
 	public class NullBaseView extends MovieClip implements IBaseView {
 		public static const NULL_BASE_VIEW:NullBaseView = new NullBaseView();

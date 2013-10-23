@@ -14,7 +14,6 @@
 		private var _baseModels:Vector.<Base> = new Vector.<Base>();
 		private var _baseViews:Vector.<BaseView> = new Vector.<BaseView>();
 		
-		// TODO: load these from an XML file.
 		private var _positions:Vector.<Point> = Vector.<Point>([new Point(250, 100), new Point(150, 300), new Point(350, 300)]);
 		private var _startingPopulations:Vector.<uint> = Vector.<uint>([10, 20, 30]);
 		private var _colours:Vector.<uint> = Vector.<uint>([0xFF0000, 0x00FF00, 0x0000FF]);
