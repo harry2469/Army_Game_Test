@@ -3,6 +3,7 @@ package src.view {
 	public interface IBaseView {
 		function select():void;
 		function deselect():void;
-		function get isNull():Boolean;
+		
+		function getNextBaseView(object:BaseViewGraphics):IBaseView;
 	}
 }

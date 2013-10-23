@@ -9,10 +9,6 @@ package src.view {
 	public class BaseView implements IBaseView {
 		private var _art:BaseViewGraphics;
 		
-		public function get isNull():Boolean {
-			return false;
-		}
-		
 		public function get art():MovieClip {
 			return _art;
 		}
@@ -49,6 +45,10 @@ package src.view {
 		
 		private function setPopulation(value:int):void {
 			_art.setText(""+value);
+		}
+		
+		public function getNextBaseView(object:BaseViewGraphics):IBaseView {
+			return NullBaseView.makeNullBaseView();
 		}
 	}
 }

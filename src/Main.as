@@ -18,7 +18,7 @@
 		private var _startingPopulations:Vector.<uint> = Vector.<uint>([10, 20, 30]);
 		private var _colours:Vector.<uint> = Vector.<uint>([0xFF0000, 0x00FF00, 0x0000FF]);
 		
-		public var _selected:IBaseView = NullBaseView.NULL_BASE_VIEW;
+		public var _selected:IBaseView = NullBaseView.makeNullBaseView();
 		
 		public function Main():void {
 			if (stage != null) // Stage may be null if .swf file is loded in another .swf file but not added to the stage yet
@@ -46,14 +46,11 @@
 		
 		private function addViewListeners():void {
 			for (var i:uint = 0; i < _baseViews.length; i++)
-				_baseViews[i].art.addEventListener(MouseEvent.CLICK, selectIfAppropiate);
+				_baseViews[i].art.addEventListener(MouseEvent.CLICK, resolveSelectionState);
 		}
 		
-		private function selectIfAppropiate(event:MouseEvent):void {
-			if (!_selected.isNull)
-				selected = NullBaseView.NULL_BASE_VIEW;
-			else
-				selected = event.target.parent.creator;
+		private function resolveSelectionState(event:MouseEvent):void {
+			selected = _selected.getNextBaseView(event.target.parent);
 		}
 		
 		private function set selected(value:IBaseView):void {
